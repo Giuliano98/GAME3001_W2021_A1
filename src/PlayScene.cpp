@@ -11,6 +11,11 @@
 PlayScene::PlayScene()
 {
 	PlayScene::start();
+
+	// Set Background music
+	SoundManager::Instance().load("../Assets/audio/Background_music.wav", "bg_music", SOUND_MUSIC);
+	SoundManager::Instance().playMusic("bg_music", 10, 0);
+	SoundManager::Instance().setMusicVolume(20); 
 }
 
 PlayScene::~PlayScene()
@@ -85,13 +90,14 @@ void PlayScene::handleEvents()
 
 		// setup target
 		m_pTarget->setEnabled(true);
-		m_pTarget->getTransform()->position = glm::vec2(700.0f, 300.0f);
+		m_pTarget->getTransform()->position = glm::vec2(700.0f, Util::RandomRange(150, 450));
 		
 		// setup spaceship
 		m_pSpaceShip->setEnabled(true);
 		m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);		
 		m_pSpaceShip->getTransform()->position = glm::vec2(100.0f, Util::RandomRange(0, 550));
 		m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+		m_pSpaceShip->setMaxSpeed(6.0f);
 		m_pSpaceShip->setRotation(0.0f);
 
 	}
@@ -102,13 +108,14 @@ void PlayScene::handleEvents()
 
 		// setup target
 		m_pTarget->setEnabled(true);
-		m_pTarget->getTransform()->position = glm::vec2(500.0f, 300.0f);
+		m_pTarget->getTransform()->position = glm::vec2(500.0f, Util::RandomRange(150, 450));
 		
 		// setup spaceship
 		m_pSpaceShip->setEnabled(true);
 		m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
 		m_pSpaceShip->getTransform()->position = glm::vec2(350.0f, 300.0f);
 		m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+		m_pSpaceShip->setMaxSpeed(6.0f);
 		m_pSpaceShip->setRotation(0.0f);
 		
 	}
@@ -117,22 +124,26 @@ void PlayScene::handleEvents()
 		m_old_stateFlag = m_stateFlag;
 		m_pSpaceShip->setOption(3);
 
-		//// setup spaceship
-		//m_pSpaceShip->setEnabled(true);
-		//m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
-		////m_pSpaceShip->getTransform()->position = glm::vec2(350.0f, Util::RandomRange(150, 450));
-		//m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
-		//m_pSpaceShip->setRotation(0.0f);
+		// setup target
+		m_pTarget->setEnabled(true);
+		m_pTarget->getTransform()->position = glm::vec2(500.0f, Util::RandomRange(60, 540));
+		
+		// setup spaceship
+		m_pSpaceShip->setEnabled(true);
+		m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
+		m_pSpaceShip->getTransform()->position = glm::vec2(150.0f, Util::RandomRange(150, 450));
+		m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+		m_pSpaceShip->setMaxSpeed(6.0f);
+		m_pSpaceShip->setRotation(0.0f);
 
-		//// setup target
-		//m_pTarget->setEnabled(true);
-		//m_pTarget->getTransform()->position = glm::vec2(500.0f, Util::RandomRange(60, 540));
 		
 	}
 	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_4) && m_stateFlag != m_old_stateFlag)
 	{
 		m_old_stateFlag = m_stateFlag;
 		m_pSpaceShip->setOption(4);
+
+		
 	}
 	
 }
@@ -141,7 +152,8 @@ void PlayScene::start()
 {
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
-
+	
+	
 	// It display the instructions 
 	display_instructions();
 	

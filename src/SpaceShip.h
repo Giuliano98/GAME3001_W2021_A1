@@ -33,7 +33,7 @@ public:
 
 	// Set option to play steering behaviour
 	void setOption(int op);
-	int getOption();
+	int getOption() const;
 	
 	// Steering behaviors functions
 	void Seeking();

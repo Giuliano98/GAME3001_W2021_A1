@@ -3,6 +3,7 @@
 
 #include "SoundManager.h"
 #include "TextureManager.h"
+#include "Util.h"
 
 
 Target::Target()
@@ -20,6 +21,8 @@ Target::Target()
 	getRigidBody()->isColliding = false;
 
 	SoundManager::Instance().load("../Assets/audio/coinPick.wav", "coinPick", SOUND_SFX);
+	SoundManager::Instance().setMusicVolume(50);
+	
 }
 
 Target::~Target()
@@ -33,6 +36,8 @@ void Target::draw()
 
 	// draw the target
 	TextureManager::Instance()->draw("circle", x, y, 0, 255, true);
+
+	Util::DrawCircle(getTransform()->position, 150);
 }
 
 void Target::update()

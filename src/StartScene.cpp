@@ -50,18 +50,16 @@ void StartScene::start()
 	m_pStartLabel->setParent(this);
 	addChild(m_pStartLabel);
 
-	m_pInstructionsLabel = new Label("Student ID: 101319819", "Consolas", 30, { 113, 208, 246, 255 }, glm::vec2(400.0f, 120.0f));
+	m_pInstructionsLabel = new Label("Student ID: 101319819", "Consolas", 30, { 0, 178, 89, 255 }, glm::vec2(400.0f, 120.0f));
 	m_pInstructionsLabel->setParent(this);
 	addChild(m_pInstructionsLabel);
 
+	// add a GBCLogo
 	m_pLogo = new Logo();
 	m_pLogo->getTransform()->position = glm::vec2(400.0f, 300.0f);
 	addChild(m_pLogo);
-	
-	/*m_pShip = new Ship();
-	m_pShip->getTransform()->position = glm::vec2(400.0f, 300.0f); 
-	addChild(m_pShip);*/ 
 
+	
 	// Start Button
 	m_pStartButton = new Button();
 	m_pStartButton->getTransform()->position = glm::vec2(400.0f, 500.0f); 

@@ -37,7 +37,7 @@ void SpaceShip::draw()
 
 void SpaceShip::update()
 {
-	m_Move();
+	//m_Move();
 }
 
 void SpaceShip::clean()
@@ -60,7 +60,7 @@ void SpaceShip::setAccelerationRate(const float rate) { m_accelerationRate = rat
 
 void SpaceShip::setOption(int op) { m_optionBehavior = op; }
 
-int SpaceShip::getOption() { return m_optionBehavior; }
+int SpaceShip::getOption() const { return m_optionBehavior; }
 
 void SpaceShip::Seeking()
 {
@@ -114,7 +114,7 @@ void SpaceShip::Fleeing()
 
 
 	auto target_rotation = Util::signedAngle(getOrientation(), m_targetDirection);
-	// change the target rotation -
+	// change the target rotation by 180
 	target_rotation *= -1;
 
 	
@@ -146,7 +146,6 @@ void SpaceShip::Fleeing()
 
 void SpaceShip::Arrival()
 {
-	//std::cout << "Arrival!!!!" << std::endl;
 	auto deltaTime = TheGame::Instance()->getDeltaTime();
 
 	// direction with magnitude
@@ -178,9 +177,19 @@ void SpaceShip::Arrival()
 	// add acceleration where the orientation is pointing
 	getRigidBody()->acceleration = getOrientation() * getAccelerationRate();
 
-	// using the formula pf = pi + vi*t + 0.5ai*t^2
+
+	auto m_velocityMag = Util::magnitude(getRigidBody()->velocity);
+
 	getRigidBody()->velocity += getOrientation() * (deltaTime)+
-		0.5f * getRigidBody()->acceleration * (deltaTime);
+			0.5f * getRigidBody()->acceleration * (deltaTime);
+
+	
+	// distance is the distance between the spaceship and the target positions
+	const auto distance = abs(Util::distance(m_destination, getTransform()->position));
+	// using math I can make the max speed decrease lineal
+	if (distance < 150.0f) { setMaxSpeed(0.05f * distance); }
+
+	
 
 	getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
 
@@ -190,7 +199,7 @@ void SpaceShip::Arrival()
 
 void SpaceShip::ObstacleAvoidance()
 {
-	std::cout << "ObstacleAvoidance!!!!" << std::endl;
+	
 }
 
 void SpaceShip::setOrientation(const glm::vec2 orientation) { m_orientation = orientation; }
