@@ -1,3 +1,3 @@
-# GAME3001-W2021-Lab 2
+# GAME3001-W2021-A1
 
-This is a demo project for Lab 2
+This is the final Code for AI on my Assigment 1.
